@@ -1,19 +1,19 @@
-//UNHIDE WAIVER
-function hideWaiver() {
-    let consent = document.getElementById('consent');
-    let waiverText = document.getElementById('waiver');
-    if (consent.checked == true) {
-        waiverText.style.display = 'block';
-    } else {
-        waiverText.style.display = 'none';
-    }
+//CHANGE WAIVER
+let waiverData = {
+    "casino": "Casino Waiver: If you breach these Conditions of Use and we take no action, we will still be entitled to use our rights and remedies in any other situation where you breach these Conditions of Use.",
+    "golf": "Golf Waiver: If you breach these Conditions of Use and we take no action, we will still be entitled to use our rights and remedies in any other situation where you breach these Conditions of Use.",
+    "spa": "Spa Waiver: If you breach these Conditions of Use and we take no action, we will still be entitled to use our rights and remedies in any other situation where you breach these Conditions of Use."
+}
+
+function changeWaiver(id) {
+    document.getElementById('waiver').innerHTML = waiverData[id]
 }
 
 //ARRAY OF WAIVERS
 let arrWaivers = [
-["Ross", "Gellar", "rgellar@gmail.com", 1234567890, 1],
-["Monica", "Gellar", "mgellar@gmail.com", 1234567890, 1],
-["Chandler", "Bing", "cbing@gmail.com", 1234567890, 1]
+["Ross", "Gellar", "rgellar@gmail.com", 1234567890, "casino", "on"],
+["Monica", "Gellar", "mgellar@gmail.com", 1234567890, "spa","on"],
+["Chandler", "Bing", "cbing@gmail.com", 1234567890,"golf", "on"]
 ]
 
 //CHECK LOCAL STORAGE & RETURN STORAGE OBJECT INTO ARRAY
@@ -39,6 +39,7 @@ function buildTable() {
             <td>${waiver[2]}</td>
             <td>${waiver[3]}</td>
             <td>${waiver[4]}</td>
+            <td>${waiver[5]}</td>
             <td><button class="delete">X</button></td>
         </tr>
         `
@@ -54,11 +55,15 @@ form.addEventListener('submit', (e) => {
     let lName = document.getElementById('lName').value
     let email = document.getElementById('email').value
     let tel = document.getElementById('tel').value;
+    let location = document.getElementById('location').value;
     let consent = document.getElementById('consent').value;
-    let arrNewWaiver = [fName, lName, email, tel, consent]
+    let arrNewWaiver = [fName, lName, email, tel, location, consent]
     arrWaivers.push(arrNewWaiver)
     buildTable()
+    alert('Success!')
     form.reset()
+    const waiverDiv = document.getElementById('waiver')
+    waiverDiv.textContent = ''
     form.fName.focus()
 })
 

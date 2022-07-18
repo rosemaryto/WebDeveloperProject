@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading JSON with the Fetch API</title>
+    <script src="js/script.js" defer></script>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+        </style>
+</head>
+
+<body>
+  <table id="waiverTable">
+    <thead>
+  <tr>
+    <th>First</th>
+    <th>Last</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Waiver</th>
+    <th>Consent</th>
+    <th>Notes</th>
+    <th>ID</th>
+    <th>createdAt</th>
+    <th>updatedAt</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+  </table>
+ 
+  <script>
+    fetch('https://testapi.io/api/pechangarc/resource/waiver')
+    .then( response => response.json())
+    .then( waiver => {
+        let table = document.getElementById('waiverTable')
+        let tbody = document.createElement('tbody')
+        for (let waive of waiver.data) {
+            tbody.innerHTML += `
+            
+            <tr>
+            <td>${waive.first}</td>
+            <td>${waive.last}</td>
+            <td>${waive.email}</td>
+            <td>${waive.phone}</td>
+            <td>${waive.waiver}</td>
+            <td>${waive.consent}</td>
+            <td>${waive.notes}</td>
+            <td>${waive.id}</td>
+            <td>${waive.createdAt}</td>
+            <td>${waive.updatedAt}</td>
+            </tr>          
+
+            `;
+            
+        }
+        table.appendChild(tbody)
+        
+    })
+    .catch( e => console.log(e.message) );
+  </script>
+</body>
+</html>
